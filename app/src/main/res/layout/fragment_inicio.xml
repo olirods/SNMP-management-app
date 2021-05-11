@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrapFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="98dp" />
+
+            <TextView
+                android:id="@+id/nameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:text="¡Bienvenido! Estás conectado a: " />
+
+            <TextView
+                android:id="@+id/descText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:text="   Descripción: " />
+
+            <TextView
+                android:id="@+id/locText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Localización: " />
+
+            <TextView
+                android:id="@+id/contactText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="   Contacto: " />
+
+            <Button
+                android:id="@+id/buttonIf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interfaces" />
+
+            <Button
+                android:id="@+id/buttonSTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STP" />
+
+            <Button
+                android:id="@+id/buttonIP"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:text="IP" />
+
+            <Button
+                android:id="@+id/buttonRoute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Route" />
+
+            <Button
+                android:id="@+id/buttonUDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UDP" />
+
+            <Button
+                android:id="@+id/buttonTcp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TCP" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_tabla_ip">
+
+    <ScrollView
+        android:layout_width="395dp"
+        android:layout_height="715dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:id="@+id/fila1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ipAdEntAddr"
+                        android:layout_width="117dp"
+                        android:layout_height="wrap_content"
+                        android:text="ipAdEntAddr" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="ipAdEntIfIndex" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="138dp"
+                        android:layout_height="wrap_content"
+                        android:text="ipAdEntNetMask" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ipAdEntBcastAddr" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ipAdEntReasmMaxSize" />
+                </TableRow>
+
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

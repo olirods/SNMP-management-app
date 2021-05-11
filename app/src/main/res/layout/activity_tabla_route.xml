@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activity_tabla_route"
+    tools:layout_editor_absoluteY="56dp"
+    tools:showIn="@layout/activity_tabla_route">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+            <TableRow
+                android:id="@+id/fila1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/ipRouteDest"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteDest" />
+
+                <TextView
+                    android:id="@+id/ipRouteIfIndex"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteIfIndex" />
+
+                <TextView
+                    android:id="@+id/ipRouteMetric1"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMetric1" />
+
+                <TextView
+                    android:id="@+id/ipRouteMetric2"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMetric2" />
+
+                <TextView
+                    android:id="@+id/ipRouteMetric3"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMetric3" />
+
+                <TextView
+                    android:id="@+id/ipRouteMetric4"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMetric4" />
+
+                <TextView
+                    android:id="@+id/ipRouteNextHop"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteNextHop" />
+
+                <TextView
+                    android:id="@+id/ipRouteType"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteType" />
+
+                <TextView
+                    android:id="@+id/ipRouteProto"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteProto" />
+
+                <TextView
+                    android:id="@+id/ipRouteAge"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteAge" />
+
+                <TextView
+                    android:id="@+id/ipRouteMask"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMask" />
+
+                <TextView
+                    android:id="@+id/ipRouteMetric5"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteMetric5" />
+
+                <TextView
+                    android:id="@+id/ipRouteInfo"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:text="ipRouteInfo" />
+
+            </TableRow>
+            </TableLayout>
+
+
+        </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/buttonEnviar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Enviar" />
+    </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
