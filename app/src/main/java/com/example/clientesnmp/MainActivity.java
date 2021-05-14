@@ -1,5 +1,6 @@
 package com.example.clientesnmp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         loadFragment(new InicioFragment());
+
+        Intent intent = new Intent(this, TrapService.class);
+        startService(intent);
     }
 
 
@@ -42,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
 
-                case R.id.navigation_notifications:
-                    fragment = new TrapFragment();
-                    break;
                 case R.id.navigation_home:
                     fragment = new InicioFragment();
                     break;

@@ -1,5 +1,8 @@
 package com.example.clientesnmp;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -46,25 +49,24 @@ import org.snmp4j.util.ThreadPool;
 
 import java.io.IOException;
 
-public class TrapActivity extends AppCompatActivity implements CommandResponder{
+public class TrapService extends Service implements CommandResponder {
     private AsyncTask task;
     private ProgressDialog progress;
     private TextView tv1;
     private StringBuffer logResult = new StringBuffer();
 
-    public static String puertoTrap = "162";
+    public static String puertoTrap = "1162";
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trap);
+    public TrapService() {
+    }
+
+    public void onCreate() {
         createNotificationsChannels();
         notificationManager=NotificationManagerCompat.from(this);
-        tv1 = (TextView) findViewById(R.id.textView2);
-        task = new mAsyncTask().execute();
-
-
+        task = new TrapService.mAsyncTask().execute();
     }
-    public void sendOnChannel1(View v){
+
+    public void sendOnChannel1(){
         Intent resultIntent = new Intent(this, TrapActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
@@ -151,8 +153,8 @@ public class TrapActivity extends AppCompatActivity implements CommandResponder{
             //notificacion();
 
 
-            tv1.setText(pdu.toString());
-            sendOnChannel1(this.findViewById(android.R.id.content));
+
+            sendOnChannel1();
             int pduType = pdu.getType();
             if ((pduType != PDU.TRAP) && (pduType != PDU.V1TRAP) && (pduType != PDU.REPORT)
                     && (pduType != PDU.RESPONSE))
@@ -241,17 +243,23 @@ public class TrapActivity extends AppCompatActivity implements CommandResponder{
         if(keyCode == KeyEvent.KEYCODE_BACK){
             if(task != null && task.getStatus() != AsyncTask.Status.FINISHED){
                 try{
-                transport.close();
+                    transport.close();
 
                 }
                 catch(IOException e){
-                tv1.setText("ERror");
+                    tv1.setText("ERror");
                 }
                 //Thread.currentThread().interrupt();
                 task.cancel(true);
                 //this.finish();
             }
         }
-        return super.onKeyDown(keyCode, event);
+        return onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

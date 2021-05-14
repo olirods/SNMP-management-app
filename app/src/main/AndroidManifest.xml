@@ -16,7 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_tabla_stp"></activity>
+        <service
+            android:name=".TrapService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".Activity_tabla_stp" />
         <activity android:name=".Activity_tabla_if" />
         <activity android:name=".Activity_tabla_tcp" />
         <activity android:name=".Activity_tabla_udp" />
@@ -28,11 +33,6 @@
         <activity
             android:name=".Activity_tabla_ip"
             android:label="Tabla de direcciones IP" />
-        <activity android:name=".PruebaSet" />
-        <activity
-            android:name=".OtraActivity"
-            android:label="@string/title_activity_otra"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="Gestor de dispositivos">
