@@ -27,10 +27,6 @@
         <activity android:name=".Activity_tabla_udp" />
         <activity android:name=".Activity_tabla_route" />
         <activity
-            android:name=".TrapActivity"
-            android:label="Recepción de traps"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".Activity_tabla_ip"
             android:label="Tabla de direcciones IP" />
         <activity

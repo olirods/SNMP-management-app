@@ -48,7 +48,7 @@ public class AjustesFragment extends Fragment {
         trapPortEditText = view.findViewById(R.id.editText3);
 
         ipEditText.setText(SNMPRequest.ipAddress);
-        trapPortEditText.setText(TrapActivity.puertoTrap);
+        trapPortEditText.setText(TrapService.puertoTrap);
 
         ipEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +81,7 @@ public class AjustesFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                TrapActivity.puertoTrap = editable.toString();
+                TrapService.puertoTrap = editable.toString();
 
             }
         });

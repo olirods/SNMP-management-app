@@ -67,7 +67,7 @@ public class TrapService extends Service implements CommandResponder {
     }
 
     public void sendOnChannel1(){
-        Intent resultIntent = new Intent(this, TrapActivity.class);
+        Intent resultIntent = new Intent(this, MainActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.notif)
