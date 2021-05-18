@@ -52,7 +52,6 @@ import java.io.IOException;
 public class TrapService extends Service implements CommandResponder {
     private AsyncTask task;
     private ProgressDialog progress;
-    private TextView tv1;
     private StringBuffer logResult = new StringBuffer();
 
     public static String puertoTrap = "1162";
@@ -63,7 +62,7 @@ public class TrapService extends Service implements CommandResponder {
     public void onCreate() {
         createNotificationsChannels();
         notificationManager=NotificationManagerCompat.from(this);
-        task = new TrapService.mAsyncTask().execute();
+        task = new TrapService.mAsyncTaskTrap().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void sendOnChannel1(){
@@ -200,20 +199,13 @@ public class TrapService extends Service implements CommandResponder {
 
 
 
-    class mAsyncTask extends AsyncTask<Void, Void, Void> {
+    class mAsyncTaskTrap extends AsyncTask<Void, Void, Void> {
         protected void onPreExecute() {
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            /*try {
 
-                run();
-
-            } catch (Exception e) {
-
-                tv1.append("Fallo");
-            }*/
             String resp="";
 
             try
@@ -233,10 +225,10 @@ public class TrapService extends Service implements CommandResponder {
         }
 
         protected void onPostExecute(Void result) {
-            tv1.setText(logResult);
-
+;
 
         }
+
 
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -247,7 +239,7 @@ public class TrapService extends Service implements CommandResponder {
 
                 }
                 catch(IOException e){
-                    tv1.setText("ERror");
+                    ;
                 }
                 //Thread.currentThread().interrupt();
                 task.cancel(true);

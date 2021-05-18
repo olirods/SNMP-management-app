@@ -21,7 +21,7 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 public class SNMPRequest {
 
     private static final String TAG = "SNMP CLIENT";
-    public static String ipAddress = "192.168.0.2";
+    public static String ipAddress = "192.168.0.23";
     private static final String port = "161";
 
     // command to request from Server
