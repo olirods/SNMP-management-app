@@ -16,18 +16,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity" android:label="Registro de usuario" android:screenOrientation="portrait"></activity>
+        <activity android:name=".NewEquipoActivity"
+            android:label="Nuevo dispositivo"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Registro de usuario"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:label="Gestión de dispositivos SNMP"
             android:screenOrientation="portrait">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".TrapService"
@@ -45,8 +51,7 @@
         <activity
             android:name=".MainActivity"
             android:label="Gestor de dispositivos"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

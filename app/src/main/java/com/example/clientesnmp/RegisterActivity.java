@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText userEditText, passEditText, nameEditText;

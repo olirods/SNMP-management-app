@@ -12,12 +12,8 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "equipos",
         foreignKeys = {
         @ForeignKey(entity = UserEntity.class,
-            parentColumns = "id_u",
+            parentColumns = "id",
             childColumns = "id_u",
-            onDelete = CASCADE),
-        @ForeignKey(entity = GrupoEntity.class,
-            parentColumns = "id_g",
-            childColumns = "id_g",
             onDelete = CASCADE)})
 public class EquipoEntity {
 
@@ -33,11 +29,11 @@ public class EquipoEntity {
     @ColumnInfo(name = "v_snmp")
     private Integer v_snmp;
 
-    @ColumnInfo(name = "id_u")
-    private Integer id_u;
-
     @ColumnInfo(name = "id_g")
     private Integer id_g;
+
+    @ColumnInfo(name = "id_u", index = true)
+    private Integer id_u;
 
     public Integer getId_e() {
         return id_e;

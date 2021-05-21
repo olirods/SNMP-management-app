@@ -5,18 +5,19 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
-
-
 
 public class DashboardFragment extends Fragment {
 
@@ -25,31 +26,127 @@ public class DashboardFragment extends Fragment {
     private TextView descText;
     private TextView locText;
     private TextView contactText;
-    private TableLayout tableLayout;
+    private Button añadirButton;
     private int user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        user_id = getArguments().getInt("user_id");
+        if (!getArguments().isEmpty()) {
+            user_id = getArguments().getInt("user_id");
+        }
 
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TableLayout tableLayout = (TableLayout) view.findViewById(R.id.table);
+        final LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
 
         Database database = Database.getDatabase(getActivity().getApplicationContext());
+
+        añadirButton = view.findViewById(R.id.button);
+
+        añadirButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), NewEquipoActivity.class);
+                i.putExtra("user_id",user_id);
+                startActivity(i);
+            }
+        });
+
         final EquipoDao equipoDao = database.equipoDao();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<EquipoEntity> equipos = equipoDao.getEquiposFromUser(new Integer(user_id));
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                for (int i=1; i <= 3; i++) {
+                    final TextView title = new TextView(getActivity().getApplicationContext());
+                    String grupo_aux = "Desconocido";
+                    switch(i) {
+                        case 1: grupo_aux = "Servidores";
+                                break;
+                        case 2: grupo_aux = "Switches";
+                            break;
+                        case 3: grupo_aux = "Firewalls";
+                            break;
                     }
-                });
+
+                    final String grupo = grupo_aux;
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            title.setText(grupo);
+                            layout.addView(title);
+                        }
+                    });
+
+                    final List<EquipoEntity> equipos = equipoDao.getEquiposFromUserAndGroup(new Integer(user_id),
+                            i);
+
+                    if (equipos.isEmpty()) {
+                        final TextView emptyText = new TextView(getActivity().getApplicationContext());
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                emptyText.setText("No hay dispositivos de este grupo que mostrar");
+                                layout.addView(emptyText);
+                            }
+                        });
+                    } else {
+                        final TableLayout tlayout = new TableLayout(getActivity().getApplicationContext());
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                layout.addView(tlayout);
+                            }
+                        });
+
+
+                        for (int z = 0; z < equipos.size(); z+=2) {
+                            final TableRow trow = new TableRow(getActivity().getApplicationContext());
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tlayout.addView(trow);
+                                }
+                            });
+
+                            for (int j = 0; j < equipos.size(); j++) {
+                                final CardView card = new CardView(getActivity().getApplicationContext());
+                                final TextView ipText = new TextView(getActivity().getApplicationContext());
+                                final TextView nombreText = new TextView(getActivity().getApplicationContext());
+                                final TextView versionText = new TextView(getActivity().getApplicationContext());
+                                final TextView onlineText = new TextView(getActivity().getApplicationContext());
+
+                                final String ipEquipo = equipos.get(j).getIP();
+                                final String nombreEquipo = equipos.get(j).getNombre_e();
+                                final Integer versionEquipo = equipos.get(j).getV_snmp();
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ipText.setText(ipEquipo);
+                                        nombreText.setText(nombreEquipo);
+                                        versionText.setText(versionEquipo);
+                                        onlineText.setText("ONLINE: NO SÉ");
+
+                                        card.addView(ipText);
+                                        card.addView(nombreText);
+                                        card.addView(versionText);
+                                        card.addView(onlineText);
+
+                                        trow.addView(card);
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                }
+
             }
-        });
+        }).start();
 
 
 

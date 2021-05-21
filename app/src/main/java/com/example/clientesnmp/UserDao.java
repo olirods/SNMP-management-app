@@ -13,6 +13,6 @@ public interface UserDao {
     @Query("SELECT * from users where userId=(:userId) and password=(:password)")
     UserEntity login(String userId, String password);
 
-    @Query("SELECT * from users where id_u=(:id_u)")
-    UserEntity getUser(Integer id_u);
+    @Query("SELECT * from users where id=(:id)")
+    UserEntity getUser(Integer id);
 }
