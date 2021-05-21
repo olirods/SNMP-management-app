@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
 
 public class DashboardFragment extends Fragment {
 
@@ -58,7 +60,13 @@ public class DashboardFragment extends Fragment {
             @Override
             public void run() {
                 for (int i=1; i <= 3; i++) {
+                    final Space separacion = new Space(getActivity().getApplicationContext());
+                    separacion.setMinimumHeight(50);
+
                     final TextView title = new TextView(getActivity().getApplicationContext());
+                    title.setAllCaps(true);
+                    title.setTextSize(30);
+
                     String grupo_aux = "Desconocido";
                     switch(i) {
                         case 1: grupo_aux = "Servidores";
@@ -75,6 +83,7 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void run() {
                             title.setText(grupo);
+                            layout.addView(separacion);
                             layout.addView(title);
                         }
                     });
@@ -112,29 +121,37 @@ public class DashboardFragment extends Fragment {
                                 }
                             });
 
-                            for (int j = 0; j < equipos.size(); j++) {
+                            for (int j = z; j < z+2 && j < equipos.size(); j++) {
                                 final CardView card = new CardView(getActivity().getApplicationContext());
                                 final TextView ipText = new TextView(getActivity().getApplicationContext());
                                 final TextView nombreText = new TextView(getActivity().getApplicationContext());
                                 final TextView versionText = new TextView(getActivity().getApplicationContext());
                                 final TextView onlineText = new TextView(getActivity().getApplicationContext());
 
+                                final LinearLayout cardLayout = new LinearLayout(getActivity().getApplicationContext());
+                                cardLayout.setOrientation(LinearLayout.VERTICAL);
+                                card.setContentPadding(10,10,10,10);
+                                card.setUseCompatPadding(true);
+                                card.setMaxCardElevation(10);
+                                card.addView(cardLayout);
+
                                 final String ipEquipo = equipos.get(j).getIP();
                                 final String nombreEquipo = equipos.get(j).getNombre_e();
                                 final Integer versionEquipo = equipos.get(j).getV_snmp();
+
 
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         ipText.setText(ipEquipo);
                                         nombreText.setText(nombreEquipo);
-                                        versionText.setText(versionEquipo);
+                                        versionText.setText(versionEquipo.toString());
                                         onlineText.setText("ONLINE: NO SÉ");
 
-                                        card.addView(ipText);
-                                        card.addView(nombreText);
-                                        card.addView(versionText);
-                                        card.addView(onlineText);
+                                        cardLayout.addView(ipText);
+                                        cardLayout.addView(nombreText);
+                                        cardLayout.addView(versionText);
+                                        cardLayout.addView(onlineText);
 
                                         trow.addView(card);
                                     }
