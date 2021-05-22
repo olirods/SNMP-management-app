@@ -21,11 +21,9 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 public class SNMPRequest {
 
     private static final String TAG = "SNMP CLIENT";
-    public static String ipAddress = "192.168.0.23";
-    private static final String port = "161";
+    private static final String port = "1161";
 
     // command to request from Server
-    private static final String OIDVALUE = "1.3.6.1.4.1.0";
     private static final int SNMP_VERSION = SnmpConstants.version2c;
     private static String community = "public";
 
@@ -38,7 +36,7 @@ public class SNMPRequest {
     static VariableBinding req;
 
 
-    public String sendSnmpGetNext(String cmd) throws Exception {
+    public String sendSnmpGetNext(String cmd, String ipAddress) throws Exception {
         String resultado = "";
         // Create TransportMapping and Listen
         TransportMapping<UdpAddress> transport = new DefaultUdpTransportMapping();
@@ -101,7 +99,7 @@ public class SNMPRequest {
         return resultado;
     }
 
-    public static void sendSnmpSet(String sysContactOid, String texto, int tipo) throws Exception
+    public static void sendSnmpSet(String sysContactOid, String texto, int tipo, String ipAddress) throws Exception
     {
 
         // Create TransportMapping and Listen

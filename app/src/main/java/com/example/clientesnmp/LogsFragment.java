@@ -25,7 +25,6 @@ public class LogsFragment extends Fragment {
         ipEditText = view.findViewById(R.id.editText2);
         trapPortEditText = view.findViewById(R.id.editText3);
 
-        ipEditText.setText(SNMPRequest.ipAddress);
         trapPortEditText.setText(TrapService.puertoTrap);
 
         ipEditText.addTextChangedListener(new TextWatcher() {
@@ -41,7 +40,6 @@ public class LogsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                SNMPRequest.ipAddress = editable.toString();
 
             }
         });

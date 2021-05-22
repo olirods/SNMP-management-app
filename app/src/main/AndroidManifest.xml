@@ -40,14 +40,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activity_tabla_stp" />
-        <activity android:name=".Activity_tabla_if" />
-        <activity android:name=".Activity_tabla_tcp" />
-        <activity android:name=".Activity_tabla_udp" />
-        <activity android:name=".Activity_tabla_route" />
-        <activity
-            android:name=".Activity_tabla_ip"
-            android:label="Tabla de direcciones IP" />
         <activity
             android:name=".MainActivity"
             android:label="Gestor de dispositivos"
