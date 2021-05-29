@@ -51,10 +51,10 @@ import java.io.IOException;
 
 public class TrapService extends Service implements CommandResponder {
     private AsyncTask task;
-    private ProgressDialog progress;
     private StringBuffer logResult = new StringBuffer();
 
     public static String puertoTrap = "1162";
+    private int user_id;
 
     public TrapService() {
     }
@@ -63,14 +63,19 @@ public class TrapService extends Service implements CommandResponder {
         createNotificationsChannels();
         notificationManager=NotificationManagerCompat.from(this);
         task = new TrapService.mAsyncTaskTrap().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+
     }
 
     public void sendOnChannel1(){
         Intent resultIntent = new Intent(this, MainActivity.class);
+        resultIntent.putExtra("user_id",user_id);
+
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.notif)
-                .setContentTitle("Se ha recibido un nuevo trap")
+                .setContentTitle("Se ha recibido un nuevo TRAP")
                 .setContentText("Pulse para verlo")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -145,13 +150,33 @@ public class TrapService extends Service implements CommandResponder {
         PDU pdu = cmdRespEvent.getPDU();
         if (pdu != null)
         {
+            String[] ipPort = cmdRespEvent.getPeerAddress().toString().split("/");
 
-            //System.out.println("Trap Type = " + pdu.getType());
-            //System.out.println("Variable Bindings = " + pdu.getVariableBindings());
-            //respuesta=""+pdu.getType();
-            //notificacion();
+            final String ip = ipPort[0];
+            final String port = ipPort[1];
+
+            Database database = Database.getDatabase(getApplicationContext());
+            final LogDao logDao = database.logDao();
+            final EquipoDao equipoDao = database.equipoDao();
 
 
+            final String trap = pdu.toString();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    EquipoEntity equipo = equipoDao.getEquipo(ip);
+
+                    String message = "El equipo " + equipo.getNombre_e() + " con IP " + equipo.getIP() + " ha enviado el siguiente trap: " + trap;
+
+                    LogEntity logEntity = new LogEntity();
+                    logEntity.setId_u(user_id);
+                    logEntity.setCreateDate(Calendar.getInstance().getTime());
+                    logEntity.setMessage(message);
+
+                    logDao.insertLog(logEntity);
+                    }
+            }).start();
 
             sendOnChannel1();
             int pduType = pdu.getType();
@@ -253,5 +278,13 @@ public class TrapService extends Service implements CommandResponder {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        user_id = intent.getIntExtra("user_id", 0);
+
+        return super.onStartCommand(intent, flags, startId);
     }
 }

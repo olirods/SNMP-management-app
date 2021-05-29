@@ -46,8 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(dash);
 
-        Intent intent = new Intent(MainActivity.this, TrapService.class);
-        startService(intent);
+        Intent trapIntent = new Intent(MainActivity.this, TrapService.class);
+        Intent checkIntent = new Intent(MainActivity.this, CheckService.class);
+
+        trapIntent.putExtras(bundle);
+        checkIntent.putExtras(bundle);
+
+        startService(trapIntent);
+        startService(checkIntent);
 
     }
 
@@ -81,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_logs:
                     fragment = new LogsFragment();
+                    fragment.setArguments(bundle);
+                    break;
+                case R.id.navigation_settings:
+                    fragment = new SettingsFragment();
                     fragment.setArguments(bundle);
                     break;
 

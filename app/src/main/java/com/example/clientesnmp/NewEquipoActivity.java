@@ -50,6 +50,7 @@ public class NewEquipoActivity extends AppCompatActivity implements AdapterView.
                 equipoEntity.setId_g(g_id_selected);
                 equipoEntity.setIP(ipEditText.getText().toString());
                 equipoEntity.setNombre_e(nombreEditText.getText().toString());
+                equipoEntity.setOnline(0);
                 if (!versionEditText.getText().toString().isEmpty())
                     equipoEntity.setV_snmp(Integer.valueOf(versionEditText.getText().toString()));
 

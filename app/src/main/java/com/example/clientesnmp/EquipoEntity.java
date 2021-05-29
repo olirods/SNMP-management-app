@@ -1,7 +1,5 @@
 package com.example.clientesnmp;
 
-import org.snmp4j.User;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -28,6 +26,9 @@ public class EquipoEntity {
 
     @ColumnInfo(name = "v_snmp")
     private Integer v_snmp;
+
+    @ColumnInfo(name = "online")
+    private Integer online;
 
     @ColumnInfo(name = "id_g")
     private Integer id_g;
@@ -81,5 +82,13 @@ public class EquipoEntity {
 
     public void setId_g(Integer id_g) {
         this.id_g = id_g;
+    }
+
+    public Integer getOnline() {
+        return online;
+    }
+
+    public void setOnline(Integer online) {
+        this.online = online;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.clientesnmp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import java.util.Date;
+import java.util.List;
 
 
 public class LogsFragment extends Fragment {
@@ -16,91 +23,68 @@ public class LogsFragment extends Fragment {
     // UI
     private EditText ipEditText;
     private EditText trapPortEditText;
+
+    private int user_id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_log, container, false);
 
-        ipEditText = view.findViewById(R.id.editText2);
-        trapPortEditText = view.findViewById(R.id.editText3);
+        final ScrollView scroll = (ScrollView) view.findViewById(R.id.scroll);
 
-        trapPortEditText.setText(TrapService.puertoTrap);
+        if (!getArguments().isEmpty()) {
+            user_id = getArguments().getInt("user_id");
+        }
 
-        ipEditText.addTextChangedListener(new TextWatcher() {
+        final LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout);
+
+        Database database = Database.getDatabase(getActivity().getApplicationContext());
+        final LogDao logDao = database.logDao();
+
+        new Thread(new Runnable() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void run() {
+                final List<LogEntity> logs = logDao.getLogsFromUser(new Integer(user_id));
 
+                for (int i = 0; i < logs.size(); i++) {
+                    final TextView logTextView = new TextView(getActivity().getApplicationContext());
+                    logTextView.setTextColor(Color.WHITE);
+                    logTextView.setPadding(0,5,0,0);
+
+                    final Date date = logs.get(i).getCreateDate();
+                    final String message = logs.get(i).getMessage();
+
+                    Boolean end_aux = false;
+
+                    if (i == logs.size()-1){
+                        end_aux = true;
+                    }
+
+                    final Boolean end = end_aux;
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            logTextView.setText(date.toString() + " - " + message);
+                            layout.addView(logTextView);
+
+                        }
+                    });
+
+                }
             }
+        }).start();
 
+        scroll.postDelayed(new Runnable() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void run() {
+                scroll.fullScroll(ScrollView.FOCUS_DOWN);
             }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        trapPortEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                TrapService.puertoTrap = editable.toString();
-
-            }
-        });
+        },1000);
 
 
         return view;
     }
 
-
-    // AsyncTask to do job in background
-    //AsyncTask<Void, Void, Void> mAsyncTask = new AsyncTask<Void, Void, Void>() {
-    /*class mAsyncTask extends AsyncTask<String, String[], String[]> {
-
-        String[] respuesta =  new String[2];
-
-        protected void onPreExecute() {
-            //mSpinner.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String[] doInBackground(String... params) {
-            try {
-                respuesta[0] = params[1];
-                respuesta[1] = new SNMPRequest().sendSnmpGetNext(params[0]);
-
-            } catch (Exception e) {
-                //  Log.d(TAG,
-                //         "Error sending snmp request - Error: " + e.getMessage());
-                // tv1.setText(e.getMessage());
-                respuesta[1] = "fallo";
-            }
-            return respuesta;
-        }
-
-        protected void onPostExecute(String[] result) {
-            // console.setText("");
-            // console.append(logResult);
-            //mSpinner.setVisibility(View.GONE);
-            //i++;
-            //if(i<3) {
-            //	new mAsyncTask().execute();
-            //}
-
-        }
-    }*/
 }

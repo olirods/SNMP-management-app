@@ -15,4 +15,8 @@ public interface UserDao {
 
     @Query("SELECT * from users where id=(:id)")
     UserEntity getUser(Integer id);
+
+    @Query("UPDATE users SET password = :newPass" +
+            " WHERE id = :id")
+    void updatePass(Integer id, String newPass);
 }

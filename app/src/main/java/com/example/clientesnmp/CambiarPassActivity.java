@@ -7,38 +7,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Random;
+public class CambiarPassActivity extends AppCompatActivity {
 
-public class RegisterActivity extends AppCompatActivity {
-
-    EditText userEditText, passEditText, pass2EditText, nameEditText;
+    EditText oldEditText, new1EditText, new2EditText;
     Button registerButton;
 
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_cambiar_pass);
 
-        userEditText = findViewById(R.id.username);
-        passEditText = findViewById(R.id.password);
-        pass2EditText = findViewById(R.id.password2);
-        nameEditText = findViewById(R.id.name);
+        user_id = getIntent().getIntExtra("user_id", 0);
+
+        oldEditText = findViewById(R.id.old);
+        new1EditText = findViewById(R.id.new1);
+        new2EditText = findViewById(R.id.new2);
 
         registerButton = findViewById(R.id.register);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Creating User Entity
-                final UserEntity userEntity = new UserEntity();
-                userEntity.setUserId(userEditText.getText().toString());
-                userEntity.setPassword(passEditText.getText().toString());
-                userEntity.setName(nameEditText.getText().toString());
 
-                if (validateInput(userEntity)) {
+                final String new1, new2;
 
-                    if (validatePassword(passEditText.getText().toString(), pass2EditText.getText().toString())) {
+                new1 = new1EditText.getText().toString();
+                new2 = new2EditText.getText().toString();
+
+                if (!new1.isEmpty() && !new2.isEmpty()) {
+
+                    if (validatePassword(new1, new2)) {
 
                         // Do insert operation
                         Database database = Database.getDatabase(getApplicationContext());
@@ -47,11 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 // Register user
-                                userDao.registerUser(userEntity);
+                                userDao.updatePass(user_id, new1);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(), "¡Usuario registrado!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "¡Contraseña cambiada!", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 });
@@ -70,14 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private Boolean validateInput(UserEntity userEntity) {
-        if (userEntity.getName().isEmpty() ||
-            userEntity.getPassword().isEmpty() ||
-            userEntity.getName().isEmpty()) {
-            return false;
-        }
-        return true;
-    }
 
     private Boolean validatePassword(String pass1, String pass2) {
         if (!pass1.equals(pass2)) {
@@ -85,5 +77,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return true;
     }
-
 }

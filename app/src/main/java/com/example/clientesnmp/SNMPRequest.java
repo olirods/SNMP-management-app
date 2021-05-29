@@ -21,7 +21,7 @@ import org.snmp4j.transport.DefaultUdpTransportMapping;
 public class SNMPRequest {
 
     private static final String TAG = "SNMP CLIENT";
-    private static final String port = "1161";
+    public static String port = "1161";
 
     // command to request from Server
     private static final int SNMP_VERSION = SnmpConstants.version2c;

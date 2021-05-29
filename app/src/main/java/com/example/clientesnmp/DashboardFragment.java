@@ -100,7 +100,7 @@ public class DashboardFragment extends Fragment {
                         }
                     });
 
-                    final List<EquipoEntity> equipos = equipoDao.getEquiposFromUserAndGroup(new Integer(user_id),
+                    final List<EquipoEntity> equipos = equipoDao.getEquipos(new Integer(user_id),
                             i);
 
                     if (equipos.isEmpty()) {

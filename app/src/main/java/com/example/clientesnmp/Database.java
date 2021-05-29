@@ -5,8 +5,11 @@ import android.widget.Toast;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
-@androidx.room.Database(entities = {UserEntity.class, EquipoEntity.class}, version = 6)
+@androidx.room.Database(entities = {UserEntity.class, EquipoEntity.class, LogEntity.class}, version = 9)
+@TypeConverters({TimestampConverter.class})
+
 public abstract class Database extends RoomDatabase {
 
     private static final String dbName = "snmpDatabase";
@@ -26,5 +29,7 @@ public abstract class Database extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract EquipoDao equipoDao();
+
+    public abstract LogDao logDao();
 
 }
