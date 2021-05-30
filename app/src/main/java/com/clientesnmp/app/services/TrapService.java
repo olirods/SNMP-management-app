@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,21 +7,21 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
-import android.app.ProgressDialog;
 
-import android.widget.Button;
-import android.widget.TextView;
+import com.clientesnmp.app.MainActivity;
+import com.clientesnmp.app.R;
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.EquipoDao;
+import com.clientesnmp.app.database.EquipoEntity;
+import com.clientesnmp.app.database.LogDao;
+import com.clientesnmp.app.database.LogEntity;
+
 import java.util.*;
-import java.lang.Object;
 
 import org.snmp4j.CommandResponder;
 import org.snmp4j.CommandResponderEvent;

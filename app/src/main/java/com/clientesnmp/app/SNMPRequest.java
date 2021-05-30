@@ -1,6 +1,5 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.snmp4j.CommunityTarget;

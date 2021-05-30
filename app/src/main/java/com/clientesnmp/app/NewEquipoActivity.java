@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.EquipoDao;
+import com.clientesnmp.app.database.EquipoEntity;
 
 public class NewEquipoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -50,7 +54,7 @@ public class NewEquipoActivity extends AppCompatActivity implements AdapterView.
                 equipoEntity.setId_g(g_id_selected);
                 equipoEntity.setIP(ipEditText.getText().toString());
                 equipoEntity.setNombre_e(nombreEditText.getText().toString());
-                equipoEntity.setOnline(0);
+                equipoEntity.setOnline(1);
                 if (!versionEditText.getText().toString().isEmpty())
                     equipoEntity.setV_snmp(Integer.valueOf(versionEditText.getText().toString()));
 

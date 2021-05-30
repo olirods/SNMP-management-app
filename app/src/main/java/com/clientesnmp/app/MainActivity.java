@@ -1,6 +1,5 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.UserDao;
+import com.clientesnmp.app.database.UserEntity;
+import com.clientesnmp.app.services.CheckService;
+import com.clientesnmp.app.services.TrapService;
 
 public class MainActivity extends AppCompatActivity {
     private int user_id;

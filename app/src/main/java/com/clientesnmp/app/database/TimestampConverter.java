@@ -1,12 +1,13 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app.database;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import androidx.room.TypeConverter;
 
+/**
+ * Conversor de tipo de "Time" y "Long". Transforma la fecha y hora concreta a un entero de tipo
+ * Long para que sea compatible con SQL. Necesario para el atributo "created_date" de la entidad Log
+ */
 public class TimestampConverter {
     @TypeConverter
     public static Date fromDate(Long dateLong) {

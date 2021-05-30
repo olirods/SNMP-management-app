@@ -1,10 +1,8 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.LogDao;
+import com.clientesnmp.app.database.LogEntity;
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Random;
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.UserDao;
+import com.clientesnmp.app.database.UserEntity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Creating User Entity
                 final UserEntity userEntity = new UserEntity();
-                userEntity.setUserId(userEditText.getText().toString());
+                userEntity.setUserLogin(userEditText.getText().toString());
                 userEntity.setPassword(passEditText.getText().toString());
                 userEntity.setName(nameEditText.getText().toString());
 

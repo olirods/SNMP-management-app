@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.UserDao;
+import com.clientesnmp.app.database.UserEntity;
 
 public class LoginActivity extends AppCompatActivity {
 

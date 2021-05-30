@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.UserDao;
 
 public class CambiarPassActivity extends AppCompatActivity {
 

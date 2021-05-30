@@ -1,23 +1,28 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Clase entidad de un usuario dentro de la base de datos. Sus atributos son las columnas de la
+ * tabla en SQL. Contiene métodos para acceder a ellos ya que se mantienen privados dentro de la
+ * clase.
+ */
 @Entity(tableName = "users")
 public class UserEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private Integer id;
+    private Integer id; // Identificador de usuario
 
-    @ColumnInfo(name = "userId")
-    private String userId;
+    @ColumnInfo(name = "userLogin")
+    private String userLogin; // Nombre de usuario para logearse
 
     @ColumnInfo(name = "password")
-    private String password;
+    private String password; // Contraseña del usuario
 
     @ColumnInfo(name = "name")
-    private String name;
+    private String name; // Nombre público del usuario
 
     public Integer getId() {
         return id;
@@ -27,12 +32,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     public String getPassword() {

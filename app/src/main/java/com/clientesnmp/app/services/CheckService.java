@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app.services;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -7,15 +7,20 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.widget.CardView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.clientesnmp.app.MainActivity;
+import com.clientesnmp.app.R;
+import com.clientesnmp.app.SNMPRequest;
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.EquipoDao;
+import com.clientesnmp.app.database.EquipoEntity;
+import com.clientesnmp.app.database.LogDao;
+import com.clientesnmp.app.database.LogEntity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -86,14 +91,14 @@ public class CheckService extends Service {
             public void run() {
                 List<EquipoEntity> equipos = equipoDao.getEquipos(new Integer(user_id));
                 for (int i = 0; i < equipos.size(); i++) {
-                    String id = equipos.get(i).getId_e().toString();
+                    String id = equipos.get(i).getId().toString();
                     String ip = equipos.get(i).getIP();
                     new mAsyncTaskCheck().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, id, ip);
                 }
             }
         }).start();
 
-        this.stopSelf();
+        stopSelf();
         return START_NOT_STICKY;
     }
 

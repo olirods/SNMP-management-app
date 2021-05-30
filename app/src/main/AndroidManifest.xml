@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.clientesnmp">
+    package="com.clientesnmp.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,26 +11,26 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".CheckService"
+            android:name="com.clientesnmp.app.services.CheckService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".CambiarPassActivity" />
+        <activity android:name="com.clientesnmp.app.CambiarPassActivity" />
         <activity
-            android:name=".NewEquipoActivity"
+            android:name="com.clientesnmp.app.NewEquipoActivity"
             android:label="Nuevo dispositivo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.clientesnmp.app.RegisterActivity"
             android:label="Registro de usuario"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.clientesnmp.app.LoginActivity"
             android:label="Gestión de dispositivos SNMP"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -42,12 +42,12 @@
         </activity>
 
         <service
-            android:name=".TrapService"
+            android:name="com.clientesnmp.app.services.TrapService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.clientesnmp.app.MainActivity"
             android:label="Gestor de dispositivos"
             android:screenOrientation="portrait" />
     </application>

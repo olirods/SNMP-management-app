@@ -1,4 +1,4 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

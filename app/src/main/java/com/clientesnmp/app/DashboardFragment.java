@@ -1,8 +1,6 @@
-package com.example.clientesnmp;
+package com.clientesnmp.app;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -20,7 +18,10 @@ import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.clientesnmp.app.database.Database;
+import com.clientesnmp.app.database.EquipoDao;
+import com.clientesnmp.app.database.EquipoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
