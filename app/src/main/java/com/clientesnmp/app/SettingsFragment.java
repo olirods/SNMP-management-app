@@ -52,7 +52,7 @@ public class SettingsFragment extends Fragment {
 
         getPortEditText.setText(SNMPRequest.port);
         trapPortEditText.setText(TrapService.puertoTrap);
-        checkEditText.setText(CheckService.minutosCheck.toString());
+        checkEditText.setText(CheckService.frecuencia.toString());
 
         getPortEditText.addTextChangedListener(new TextWatcher() {
             @Override
