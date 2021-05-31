@@ -17,32 +17,36 @@ import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
+/**
+ * Esta es la clase que gestiona el envío de mensajes SNMP tanto para obtener datos (GET) como para
+ * modificarlos (SET) en la base de datos de los dispositivos.
+ */
 public class SNMPRequest {
 
     private static final String TAG = "SNMP CLIENT";
-    public static String port = "1161";
+    public static String port = "1161"; // Puerto de envío de mensajes
+    private static final int SNMP_VERSION = SnmpConstants.version2c; // Versión SNMP utilizada
+    private static String community = "public"; // Community utilizada
 
-    // command to request from Server
-    private static final int SNMP_VERSION = SnmpConstants.version2c;
-    private static String community = "public";
-
-    private static String  sysContactValue  = "aplicasion";
-
-    public static Snmp snmp;
-    public static CommunityTarget comtarget;
-    static PDU pdu;
-    static OID oid;
-    static VariableBinding req;
-
-
-    public String sendSnmpGetNext(String cmd, String ipAddress) throws Exception {
+    /**
+     * Se utiliza para enviar un GET NEXT al dispositivo con ipAddress por SNMP, solicitando el
+     * objeto SNMP con el correspondiente OID.
+     *
+     * @param oid       OID solicitado
+     * @param ipAddress dirección IP del equipo
+     * @return la String con el resultado
+     * @throws Exception
+     */
+    public String sendSnmpGetNext(String oid, String ipAddress) throws Exception {
         String resultado = "";
-        // Create TransportMapping and Listen
+
+        // Creamos socket
         TransportMapping<UdpAddress> transport = new DefaultUdpTransportMapping();
         transport.listen();
 
         Log.d(TAG, "Create Target Address object");
-        // Create Target Address object
+
+        // Hacemos los ajustes de SNMP
         CommunityTarget comtarget = new CommunityTarget();
         comtarget.setCommunity(new OctetString(community));
         comtarget.setVersion(SNMP_VERSION);
@@ -54,30 +58,36 @@ public class SNMPRequest {
         comtarget.setTimeout(1000);
 
         Log.d(TAG, "Prepare PDU");
-        // create the PDU
+
+        // Creamos el mensaje a enviar
         PDU pdu = new PDU();
-        pdu.add(new VariableBinding(new OID(cmd)));
+        pdu.add(new VariableBinding(new OID(oid)));
         pdu.setType(PDU.GETNEXT);
 
         Snmp snmp = new Snmp(transport);
         Log.d(TAG, "Sending Request to Agent...");
 
-        // send the PDU
+        // Enviamos el mensaje. Espera hasta que recibe respuesta
         ResponseEvent response = snmp.send(pdu, comtarget);
 
-        // Process Agent Response
+        // Gestión de la respuesta. Esto se ejecutará cuando haya recibido respuesta (o no)
         if (response != null) {
-            // extract the response PDU (could be null if timed out)
+
+            // Extramos el mensaje de respuesta (puede ser null si ha sido un TIME OUT)
             PDU responsePDU = response.getResponse();
-            // extract the address used by the agent to send the response:
+
+            // Extraemos la dirección usada por el dispositivo para responder
             Address peerAddress = response.getPeerAddress();
             Log.d(TAG, "peerAddress " + peerAddress);
+
             if (responsePDU != null) {
+                // Gestionamos posibles errores
                 int errorStatus = responsePDU.getErrorStatus();
                 int errorIndex = responsePDU.getErrorIndex();
                 String errorStatusText = responsePDU.getErrorStatusText();
 
                 if (errorStatus == PDU.noError) {
+                    // Obtenemos contenido del mensaje
                     resultado = "Snmp Get Response = " + responsePDU.getVariableBindings();
                     Log.d(TAG,
                             "Snmp Get Response = "
@@ -98,14 +108,24 @@ public class SNMPRequest {
         return resultado;
     }
 
-    public static void sendSnmpSet(String sysContactOid, String texto, int tipo, String ipAddress) throws Exception
+    /**
+     * Se utiliza para enviar un GET NEXT al dispositivo con ipAddress por SNMP, solicitando la
+     * modificación del contenido del objeto SNMP con el correspondiente OID.
+     *
+     * @param oid OID del objeto a modificar
+     * @param texto         nuevo contenido
+     * @param tipo          si es Integer(1) o no
+     * @param ipAddress     dirección IP del dispositivo
+     * @throws Exception
+     */
+    public static void sendSnmpSet(String oid, String texto, int tipo, String ipAddress) throws Exception
     {
 
-        // Create TransportMapping and Listen
+        // Creamos socket
         TransportMapping transport = new DefaultUdpTransportMapping();
         transport.listen();
 
-        // Create Target Address object
+        // Hacemos los ajustes de SNMP
         CommunityTarget comtarget = new CommunityTarget();
         comtarget.setCommunity(new OctetString(community));
         comtarget.setVersion(SNMP_VERSION);
@@ -113,65 +133,60 @@ public class SNMPRequest {
         comtarget.setRetries(2);
         comtarget.setTimeout(1000);
 
-        // Create the PDU object
+        // Creamos el mensaje a enviar
         PDU pdu = new PDU();
 
-        // Setting the Oid and Value for sysContact variable
-        OID oid = new OID(sysContactOid);
-        //Variable var = new OctetString(texto);
+        // Si es un Integer o no
         Variable var;
         if (tipo == 1)
             var = new Integer32(Integer.parseInt(texto));
         else
             var = new OctetString(texto);
-        VariableBinding varBind = new VariableBinding(oid,var);
+        VariableBinding varBind = new VariableBinding(new OID(oid),var);
         pdu.add(varBind);
-
         pdu.setType(PDU.SET);
         pdu.setRequestID(new Integer32(1));
 
-        // Create Snmp object for sending data to Agent
         Snmp snmp = new Snmp(transport);
 
-        //System.out.println("\nRequest:\n[ Note: Set Request is sent for sysContact oid in RFC 1213 MIB.");
-        //System.out.println("Set operation will change the sysContact value to " + sysContactValue );
-        //System.out.println("Once this operation is completed, Querying for sysContact will get the value = " + sysContactValue + " ]");
-
-        //System.out.println("Request:\nSending Snmp Set Request to Agent...");
+        // Enviamos el mensaje. Espera hasta que recibe respuesta
         ResponseEvent response = snmp.set(pdu, comtarget);
 
-        // Process Agent Response
+        // Gestión de la respuesta. Esto se ejecutará cuando haya recibido respuesta (o no)
         if (response != null)
         {
-            //  System.out.println("\nResponse:\nGot Snmp Set Response from Agent");
             PDU responsePDU = response.getResponse();
 
             if (responsePDU != null)
             {
+                // Gestionamos posibles errores
                 int errorStatus = responsePDU.getErrorStatus();
                 int errorIndex = responsePDU.getErrorIndex();
                 String errorStatusText = responsePDU.getErrorStatusText();
 
                 if (errorStatus == PDU.noError)
                 {
-                    //System.out.println("Snmp Set Response = " + responsePDU.getVariableBindings());
+                    // Si llega hasta aquí, debe haber ido bien
+                    Log.d(TAG,
+                            "Snmp Set Response = "
+                                    + responsePDU.getVariableBindings());
                 }
                 else
                 {
-                    //System.out.println("Error: Request Failed");
-                    //System.out.println("Error Status = " + errorStatus);
-                    // System.out.println("Error Index = " + errorIndex);
-                    // System.out.println("Error Status Text = " + errorStatusText);
+                    Log.d(TAG, "Error: Request Failed");
+                    Log.d(TAG, "Error Status = " + errorStatus);
+                    Log.d(TAG, "Error Index = " + errorIndex);
+                    Log.d(TAG, "Error Status Text = " + errorStatusText);
                 }
             }
             else
             {
-                //System.out.println("Error: Response PDU is null");
+                Log.d(TAG, "Error: Response PDU is null");
             }
         }
         else
         {
-            //System.out.println("Error: Agent Timeout... ");
+            Log.d(TAG, "Error: Agent Timeout... \n");
         }
         snmp.close();
     }

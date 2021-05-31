@@ -14,9 +14,12 @@ import android.widget.EditText;
 import com.clientesnmp.app.services.CheckService;
 import com.clientesnmp.app.services.TrapService;
 
-
+/**
+ * Fragment de Ajustes. Nos permite ajustar los puertos SNMP, la frecuencia de monitorización de
+ * estado y cambiar la contraseña del usuario.
+ */
 public class SettingsFragment extends Fragment {
-
+    private int user_id; // Identificador del usuario logueado
 
     // UI
     private EditText getPortEditText;
@@ -24,23 +27,24 @@ public class SettingsFragment extends Fragment {
     private EditText checkEditText;
     private Button cambiarButton;
 
-    private int user_id;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        // Obtenemos del MainActivity el identificador del usuario logueado
         if (!getArguments().isEmpty()) {
             user_id = getArguments().getInt("user_id");
         }
 
+        // Asociación de UI con el layout XML
         getPortEditText = view.findViewById(R.id.editText2);
         trapPortEditText = view.findViewById(R.id.editText3);
         checkEditText = view.findViewById(R.id.checkEditText);
         cambiarButton = view.findViewById(R.id.cambiar);
 
+        // Botón de cambiar contraseña, que nos lleva a la correspondiente Activity
         cambiarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,10 +54,12 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Valores actuales de los puertos y la frecuencia
         getPortEditText.setText(SNMPRequest.port);
         trapPortEditText.setText(TrapService.puertoTrap);
         checkEditText.setText(CheckService.frecuencia.toString());
 
+        // Ajustar el valor nuevo del puerto si el usuario lo modifica
         getPortEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -71,6 +77,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Ajustar el valor nuevo del puerto si el usuario lo modifica
         trapPortEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -89,45 +96,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
-
-    // AsyncTask to do job in background
-    //AsyncTask<Void, Void, Void> mAsyncTask = new AsyncTask<Void, Void, Void>() {
-    /*class mAsyncTask extends AsyncTask<String, String[], String[]> {
-
-        String[] respuesta =  new String[2];
-
-        protected void onPreExecute() {
-            //mSpinner.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String[] doInBackground(String... params) {
-            try {
-                respuesta[0] = params[1];
-                respuesta[1] = new SNMPRequest().sendSnmpGetNext(params[0]);
-
-            } catch (Exception e) {
-                //  Log.d(TAG,
-                //         "Error sending snmp request - Error: " + e.getMessage());
-                // tv1.setText(e.getMessage());
-                respuesta[1] = "fallo";
-            }
-            return respuesta;
-        }
-
-        protected void onPostExecute(String[] result) {
-            // console.setText("");
-            // console.append(logResult);
-            //mSpinner.setVisibility(View.GONE);
-            //i++;
-            //if(i<3) {
-            //	new mAsyncTask().execute();
-            //}
-
-        }
-    }*/
 }
