@@ -112,7 +112,7 @@ public class CheckService extends Service {
         }).start();
 
         stopSelf(); // Destruimos una vez realizada la tarea. De aquí nos vamos a onDestroy()
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     /**
